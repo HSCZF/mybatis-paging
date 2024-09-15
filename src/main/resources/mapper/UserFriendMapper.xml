@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.mapper.UserFriendMapper">
+
+    <!--        <resultMap id="userMap" type="org.example.domain.User">-->
+    <!--            <id column="id" property="id"/>-->
+    <!--            <result column="uid" property="uid"/>-->
+    <!--            <result column="create_time" property="createTime"/>-->
+    <!--            <result column="update_time" property="updateTime"/>-->
+    <!--            <collection property="uid" ofType="org.example.domain.UserFriend">-->
+    <!--                <result column="friend_uid" property="friendUid"/>-->
+    <!--            </collection>-->
+    <!--        </resultMap>-->
+
+
+    <select id="selectUserFriendsWithPagination" resultType="org.example.domain.dto.UserFriendDTO">
+        select u.uid, f.friend_uid
+        from user u
+                 inner join user_friend f on u.uid = f.uid
+        order by u.uid
+        limit #{pageNo}, #{pageSize}
+    </select>
+
+    <select id="selectPageList" resultType="org.example.domain.dto.UserFriendDTO">
+        select u.uid, f.friend_uid
+        from user u
+                 inner join user_friend f on u.uid = f.uid
+        order by u.uid
+    </select>
+
+    <select id="countListTotal" resultType="java.lang.Long">
+        select count(*)
+        from user u
+                 inner join user_friend f on u.uid = f.uid
+    </select>
+
+
+</mapper>
